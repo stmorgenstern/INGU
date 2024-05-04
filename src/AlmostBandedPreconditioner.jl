@@ -270,13 +270,13 @@ function almostbanded_init(bands::AbstractMatrix{T}, bc::AbstractMatrix{T}, p::I
     # assign operator parts
     opbanded = view(banded, N+1:n, :)
     for i = -p:-1
-        opbanded[band(i)] .= view(bands, 1-i:n-N, i+p+1)
+        opbanded[band(i)] = view(bands, 1-i:n-N, i+p+1)
     end
     for i = 0:N
-        opbanded[band(i)] .= view(bands, 1:n-N, i+p+1)
+        opbanded[band(i)] = view(bands, 1:n-N, i+p+1)
     end
     for i = N+1:p+2*N
-        opbanded[band(i)] .= view(bands, 1:n-i, i+p+1)
+        opbanded[band(i)] = view(bands, 1:n-i, i+p+1)
     end
 
     AlmostBandedMatrix(banded, ApplyMatrix(*, Matrix{T}(I, n, N), transpose(bc)))
